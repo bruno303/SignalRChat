@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -9,10 +10,11 @@ namespace SignalRChat
     {
         public static void Main(string[] args)
         {
+            ConfigureApplication();
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IConfigurationRoot ReadConfig()
+        private static IConfigurationRoot ReadConfig()
         {
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .SetBasePath(System.AppContext.BaseDirectory)
@@ -22,7 +24,7 @@ namespace SignalRChat
             return configurationRoot;
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -45,5 +47,12 @@ namespace SignalRChat
                     });
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void ConfigureApplication()
+        {
+            CultureInfo cultureInfoPtBr = new CultureInfo("pt-BR", false);
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfoPtBr;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfoPtBr;
+        }
     }
 }
