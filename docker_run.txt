@@ -1,0 +1,3 @@
+docker build -t img_signalrchat .
+docker run -p 9000:9000 -p 9001:9001 --name signalrchat img_signalrchat
+docker start signalrchat
